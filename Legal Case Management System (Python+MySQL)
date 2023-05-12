@@ -1,0 +1,68 @@
+import tkinter as tk
+import mysql.connector
+
+class LegalCaseManagementGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Legal Case Management System")
+        
+        # Create connection to MySQL
+        self.conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database=""
+        )
+
+        # Create cursor to execute SQL queries
+        self.cursor = self.conn.cursor()
+
+        # Create GUI elements
+        tk.Label(self.root, text="Legal Case Management System", font=("Arial", 16)).grid(row=0, column=0, columnspan=3)
+
+        tk.Label(self.root, text="Case ID : ").grid(row=1, column=0)
+        self.case_id_entry = tk.Entry(self.root)
+        self.case_id_entry.grid(row=1, column=1)
+
+        tk.Label(self.root, text="Lawyer Name : ").grid(row=2, column=0)
+        self.lawyer_name_entry = tk.Entry(self.root)
+        self.lawyer_name_entry.grid(row=2, column=1)
+
+        tk.Label(self.root, text="Case Category : ").grid(row=3, column=0)
+        self.case_category_entry = tk.Entry(self.root)
+        self.case_category_entry.grid(row=3, column=1)
+
+        tk.Label(self.root, text="Client Name : ").grid(row=4, column=0)
+        self.client_name_entry = tk.Entry(self.root)
+        self.client_name_entry.grid(row=4, column=1)
+
+        tk.Label(self.root, text="Case Status : ").grid(row=5, column=0)
+        self.case_status_entry = tk.Entry(self.root)
+        self.case_status_entry.grid(row=5, column=1)
+
+        self.submit_button = tk.Button(self.root, text="Submit", command=self.add_case)
+        self.submit_button.grid(row=6, column=0, columnspan=2)
+
+    def add_case(self):
+        case_id = self.case_id_entry.get()
+        lawyer_name = self.lawyer_name_entry.get()
+        case_category = self.case_category_entry.get()
+        client_name = self.client_name_entry.get()
+        case_status = self.case_status_entry.get()
+
+        # Execute SQL query to add case to database
+        add_case_query = "INSERT INTO cases (case_id, lawyer_name, case_category, client_name, case_status) VALUES (%s, %s, %s, %s, %s)"
+        self.cursor.execute(add_case_query, (case_id, lawyer_name, case_category, client_name, case_status))
+        self.conn.commit()
+
+        # Clear entry fields and show success message
+        self.case_id_entry.delete(0, tk.END)
+        self.lawyer_name_entry.delete(0, tk.END)
+        self.case_category_entry.delete(0, tk.END)
+        self.client_name_entry.delete(0, tk.END)
+        self.case_status_entry.delete(0, tk.END)
+        tk.Label(self.root, text="Case added successfully!").grid(row=6, column=0, columnspan=3)
+        
+root = tk.Tk()
+legal_case_management_gui = LegalCaseManagementGUI(root)
+root.mainloop()
