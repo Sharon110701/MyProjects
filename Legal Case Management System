@@ -1,0 +1,145 @@
+class Case:
+    def __init__(self, case_id, client_name, case_category, lawyer_name, case_status):
+        self.case_id = case_id
+        self.client_name = client_name
+        self.case_category = case_category
+        self.lawyer_name = lawyer_name
+        self.case_status = case_status
+        
+    def __str__(self):
+        return f"{self.case_id}\t{self.client_name}\t{self.case_category}\t{self.lawyer_name}\t{self.case_status}"
+
+class CaseManagementSystem:
+    def __init__(self):
+        self.cases = []
+    
+    def add_case(self, case):
+        self.cases.append(case)
+        print("Case added successfully!")
+    
+    def update_case(self, case_id, case_category, case_status):
+        updated = False
+        for case in self.cases:
+            if case.case_id == case_id:
+                case.case_category = case_category
+                case.case_status = case_status
+                updated = True
+                print("Case updated successfully!")
+                break
+        if not updated:
+            print("Case not found!")
+    
+    def search_case(self, search_option, search_query):
+        result_cases = []
+        for case in self.cases:
+            if search_option == "case_id" and search_query in case.case_id:
+                result_cases.append(case)
+            elif search_option == "client_name" and search_query.lower() in case.client_name.lower():
+                result_cases.append(case)
+            elif search_option == "lawyer_name" and search_query.lower() in case.lawyer_name.lower():
+                result_cases.append(case)
+            elif search_option == "case_category" and search_query.lower() in case.case_category.lower():
+                result_cases.append(case)
+            elif search_option == "case_status" and search_query.lower() in case.case_status.lower():
+                result_cases.append(case)
+        if len(result_cases) > 0:
+            print("Case ID\tClient Name\tCase Category\tLawyer Name\tCase Status")
+            for case in result_cases:
+                print(case)
+        else:
+            print("No cases found!")
+    
+    def view_all_cases(self):
+        if len(self.cases) > 0:
+            print("Case ID\tClient Name\tCase Category\tLawyer Name\tCase Status")
+            for case in self.cases:
+                print(case)
+        else:
+            print("No cases found!")
+    
+    def delete_case(self, case_id):
+        deleted = False
+        for case in self.cases:
+            if case.case_id == case_id:
+                self.cases.remove(case)
+                deleted = True
+                print("Case deleted successfully!")
+                break
+        if not deleted:
+            print("Case not found!")
+    
+    def count_cases(self):
+        print(f"Number of cases: {len(self.cases)}")
+    
+    def get_case_by_index(self, index):
+        if index >= len(self.cases):
+            print("Index out of range!")
+        else:
+            print("Case ID\tClient Name\tCase Category\tLawyer Name\tCase Status")
+            print(self.cases[index])
+    
+cms = CaseManagementSystem()
+
+while True:
+    print("Welcome to Case Management System")
+    print("1. Add new case")
+    print("2. Update case")
+    print("3. Search case")
+    print("4. View all cases")
+    print("5. Delete case")
+    print("6. Exit")
+    
+    user_choice = input("Enter your choice: ")
+    
+    if user_choice == "1":
+        case_id = input("Enter case ID: ")
+        client_name = input("Enter client name: ")
+        case_category = input("Enter case category: ")
+        lawyer_name = input("Enter lawyer name: ")
+        case_status = input("Enter case status: ")
+        case = Case(case_id, client_name, case_category, lawyer_name, case_status)
+        cms.add_case(case)
+        
+    elif user_choice == "2":
+        case_id = input("Enter case ID: ")
+        case_category = input("Enter new case category: ")
+        case_status = input("Enter new case status: ")
+        cms.update_case(case_id, case_category, case_status)
+        
+    elif user_choice == "3":
+        print("Search options:")
+        print("1. Case ID")
+        print("2. Client Name")
+        print("3. Lawyer Name")
+        print("4. Case Category")
+        print("5. Case Status")
+        search_option = int(input("Enter your search option: "))
+        search_query = input("Enter your search key : ")
+        if search_option == 1:
+            cms.search_case("case_id", search_query)
+        elif search_option == 2:
+            cms.search_case("client_name", search_query)
+        elif search_option == 3:
+            cms.search_case("lawyer_name", search_query)
+        elif search_option == 4:
+            cms.search_case("case_category", search_query)
+        elif search_option == 5:
+            cms.search_case("case_status", search_query)
+        else:
+            print("Invalid search option. Please try again.")
+
+        
+    elif user_choice == "4":
+        cms.view_all_cases()
+        
+    elif user_choice == "5":
+        case_id = input("Enter case ID: ")
+        cms.delete_case(case_id)
+        
+    elif user_choice == "6":
+        print("Thank you for using Case Management System!")
+        break
+        
+    else:
+        print("Invalid choice. Please try again.")
+
