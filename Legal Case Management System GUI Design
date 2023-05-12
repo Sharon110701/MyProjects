@@ -1,0 +1,138 @@
+from tkinter import ttk 
+from tkinter import *
+
+class LegalCaseManagementSystem:
+    def __init__(self,root):
+        self.root=root
+        self.root.title("Legal Case Management System")   
+        self.root.geometry("1550x800+0+0")
+
+#TITLE
+
+        self.AddLawyer_var=StringVar()
+
+        DataTitle=Label(self.root,text="LEGAL CASE MANAGEMENT SYSTEM",bd=15,relief=RIDGE,
+                       bg='maroon',fg="white",font=("times new roman",45,"bold"),padx=1,pady=1)
+        DataTitle.pack(side=TOP,fill=X)
+
+
+#MAIN DATAFRAME & BUTTONS
+
+        DataFrame=Frame(self.root,bd=15,relief=RIDGE,padx=20)
+        DataFrame.place(x=0,y=100,width=1280,height=343)
+
+        LeftDataFrame=LabelFrame(DataFrame,bd=10,relief=RIDGE,padx=20,text="Case Details",
+                                 fg="maroon",font=("times new roman",15,"bold"))
+        LeftDataFrame.place(x=0,y=2,width=650,height=300)
+
+        ButtonFrame=Frame(self.root,bd=15,relief=RIDGE,padx=20)
+        ButtonFrame.place(x=0,y=443,width=1280,height=71)  
+
+        ButtonAdd=Button(ButtonFrame,text="Add Case",font=("times new roman",15,"bold"),bg="maroon",fg="white")
+        ButtonAdd.grid(row=0,column=0,padx=5)
+
+        ButtonUpdate=Button(ButtonFrame,text="Update Case",font=("times new roman",15,"bold"),bg="maroon",fg="white")
+        ButtonUpdate.grid(row=0,column=1,padx=5)
+
+        ButtonDelete=Button(ButtonFrame,text="Delete Case",font=("times new roman",15,"bold"),bg="maroon",fg="white")
+        ButtonDelete.grid(row=0,column=2,padx=5)
+
+        ButtonExit=Button(ButtonFrame,text="Exit",font=("times new roman",15,"bold"),bg="maroon",fg="white")
+        ButtonExit.grid(row=0,column=3,padx=5)
+
+        ButtonSearchby=Button(ButtonFrame,text="Search Case by",font=("times new roman",13,"bold"),bg="white",fg="black")
+        ButtonSearchby.grid(row=0,column=4,padx=5)
+
+        SearchCombo=ttk.Combobox(ButtonFrame,width=14,font=("times new roman",13,"bold"),state="readonly")
+        SearchCombo["values"]=("Case ID","Lawyer Name","Case Category","Client Name","Case Status")
+        SearchCombo.grid(row=0,column=5,padx=5)
+        SearchCombo.current(0)
+
+        TextSearch=Entry(ButtonFrame,bd=3,relief=RIDGE,width=13,font=("times new roman",15,"bold"))
+        TextSearch.grid(row=0,column=6,padx=40)
+        ButtonSearch=Button(ButtonFrame,text="Search Case",font=("times new roman",15,"bold"),bg="maroon",fg="white")
+        ButtonSearch.grid(row=0,column=8,padx=5)
+
+        ButtonView=Button(ButtonFrame,text="View Cases",font=("times new roman",15,"bold"),bg="maroon",fg="white")
+        ButtonView.grid(row=0,column=9,padx=5)
+
+
+#LEFT DATAFRAME
+
+        LabelCaseID=Label(LeftDataFrame,text="Case ID",font=("times new roman",15,"bold"))
+        LabelCaseID.grid(row=0,column=0)
+        CaseIDEntry=Entry(LeftDataFrame,bd=3,width=40,font=("times new roman",13,"bold"))
+        CaseIDEntry.grid(row=0,column=1,padx=40,pady=10)
+
+        LabelLawyerName=Label(LeftDataFrame,text="Lawyer Name",font=("times new roman",15,"bold"))
+        LabelLawyerName.grid(row=1,column=0)
+        LawyerNameCombo=ttk.Combobox(LeftDataFrame,width=40,font=("times new roman",13,"bold"),state="readonly")
+        LawyerNameCombo["values"]=("Case ID","Lawyer Name","Case Category","Client Name","Case Status")
+        LawyerNameCombo.grid(row=1,column=1,padx=50,pady=10)
+        LawyerNameCombo.current(0)
+
+        LabelCaseCategory=Label(LeftDataFrame,text="Case Category",font=("times new roman",15,"bold"))
+        LabelCaseCategory.grid(row=2,column=0)
+        CaseCategoryCombo=ttk.Combobox(LeftDataFrame,width=40,font=("times new roman",13,"bold"),state="readonly")
+        CaseCategoryCombo["values"]=("Criminal case","Civil case","Family Law case","Employment Law case","Real Estate case")
+        CaseCategoryCombo.grid(row=2,column=1,padx=50,pady=10)
+        CaseCategoryCombo.current(0)
+
+        LabelClientName=Label(LeftDataFrame,text="Client Name",font=("times new roman",15,"bold"))
+        LabelClientName.grid(row=3,column=0)
+        ClientNameEntry=Entry(LeftDataFrame,bd=3,width=40,font=("times new roman",13,"bold"))
+        ClientNameEntry.grid(row=3,column=1,padx=40,pady=10)
+
+        LabelCaseStatus=Label(LeftDataFrame,text="Case Status",font=("times new roman",15,"bold"))
+        LabelCaseStatus.grid(row=4,column=0)
+        CaseStatusCombo=ttk.Combobox(LeftDataFrame,width=40,font=("times new roman",13,"bold"),state="readonly")
+        CaseStatusCombo["values"]=("Open","Closed","Pending","Suspended","Dismissed")
+        CaseStatusCombo.grid(row=4,column=1,padx=50,pady=10)
+        CaseStatusCombo.current(0)
+
+
+#RIGHT DATAFRAME
+
+        RightDataFrame=LabelFrame(DataFrame,bd=10,relief=RIDGE,padx=20,text="Practicing Lawyers",
+                                 fg="maroon",font=("times new roman",15,"bold"))
+        RightDataFrame.place(x=665,y=2,width=550,height=300)
+
+        LabelLawyerName1=Label(RightDataFrame,text="Lawyer Name",font=("times new roman",15,"bold"))
+        LabelLawyerName1.grid(row=0,column=0)
+        LawyerNameEntry=Entry(RightDataFrame,textvariable=self.AddLawyer_var,bd=3,width=32,font=("times new roman",13,"bold"))
+        LawyerNameEntry.grid(row=0,column=1,padx=50,pady=10)
+
+
+#BOX DATAFRAME
+
+        BoxDataFrame=Frame(RightDataFrame,bd=4,relief=RIDGE,bg="white")
+        BoxDataFrame.place(x=260,y=80,width=115,height=124)
+
+        AddLawyerName=Button(BoxDataFrame,text="ADD",font=("times new roman",13,"bold"),width=10,bg="maroon",fg="white",pady=4)
+        AddLawyerName.grid(row=0,column=0)
+        UpdateLawyerName=Button(BoxDataFrame,text="UPDATE",font=("times new roman",13,"bold"),width=10,bg="maroon",fg="white",pady=4)
+        UpdateLawyerName.grid(row=1,column=0)
+        DeleteLawyerName=Button(BoxDataFrame,text="DELETE",font=("times new roman",13,"bold"),width=10,bg="maroon",fg="white",pady=4)
+        DeleteLawyerName.grid(row=2,column=0)
+
+
+#BOTTOM FRAME
+        
+        BottomFrame=Frame(self.root,bd=15,relief=RIDGE,bg="white")
+        BottomFrame.place(x=0,y=517,width=1280,height=210)
+
+        self.casetable=ttk.Treeview(BottomFrame,column=("case_id","lawyer_name","case_category","client_name","case_status"))
+
+        self.casetable["show"]="headings"
+
+        self.casetable.heading("case_id",text="Case ID")
+        self.casetable.heading("lawyer_name",text="Lawyer Name")
+        self.casetable.heading("case_category",text="Case Category")
+        self.casetable.heading("client_name",text="Client Name")
+        self.casetable.heading("case_status",text="Case Status")
+        self.casetable.pack(fill=BOTH, expand=1)
+
+if __name__ == "__main__":
+    root=Tk()
+    obj=LegalCaseManagementSystem(root)
+    root.mainloop()
